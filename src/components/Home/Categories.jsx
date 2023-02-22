@@ -1,22 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { Autoplay } from "swiper";
 
 // Swiper
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
+import useCategories from "../../hooks/useCategories";
 import Spinner from "../Common/Spinner";
 
 const Categories = () => {
-    const [categories, setCategories] = useState([]);
-
-    useEffect(() => {
-        fetch(`${process.env.REACT_APP_API_URL}/category`)
-            .then((res) => res.json())
-            .then((data) => {
-                setCategories(data.result);
-            });
-    }, [categories]);
+    const { categories } = useCategories();
 
     return (
         <section className="categories">
@@ -40,7 +33,7 @@ const Categories = () => {
                 >
                     {categories.map((category) => {
                         return (
-                            <SwiperSlide>
+                            <SwiperSlide key={category._id}>
                                 <div className="categories__item light-silver-bg">
                                     <img
                                         className="img-fluid"

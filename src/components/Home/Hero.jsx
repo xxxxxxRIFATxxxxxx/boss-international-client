@@ -1,17 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
+import useCategories from "../../hooks/useCategories";
 import Spinner from "../Common/Spinner";
 
 const Hero = () => {
-    const [categories, setCategories] = useState([]);
-
-    useEffect(() => {
-        fetch(`${process.env.REACT_APP_API_URL}/category`)
-            .then((res) => res.json())
-            .then((data) => {
-                setCategories(data.result);
-            });
-    }, [categories]);
+    const { categories } = useCategories();
 
     return (
         <section className="hero">
