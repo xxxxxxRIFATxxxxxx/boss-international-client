@@ -1,11 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import useProducts from "../../hooks/useProducts";
 import Spinner from "../Common/Spinner";
 
-const LatestProduct = () => {
-    const { products } = useProducts();
-
+const LatestProduct = ({ products }) => {
     return (
         <section className="latest-product spad">
             <div className="container">
@@ -14,7 +11,7 @@ const LatestProduct = () => {
                         <div className="latest-product__text">
                             <h4>Latest Products</h4>
 
-                            {products.length === 0 && (
+                            {products?.length === 0 && (
                                 <div className="text-center mx-auto">
                                     <Spinner />
                                 </div>
@@ -25,20 +22,20 @@ const LatestProduct = () => {
                                     {products.slice(0, 3).map((product) => {
                                         return (
                                             <Link
-                                                key={product._id}
-                                                to={`/productDetails/${product._id}`}
+                                                key={product?._id}
+                                                to={`/productDetails/${product?._id}`}
                                                 className="latest-product__item"
                                             >
                                                 <div className="latest-product__item__pic">
                                                     <img
-                                                        src={product.thumbnail}
+                                                        src={product?.thumbnail}
                                                         alt=""
                                                     />
                                                 </div>
                                                 <div className="latest-product__item__text">
-                                                    <h6>{product.title}</h6>
+                                                    <h6>{product?.title}</h6>
                                                     <span>
-                                                        ${product.price}.00
+                                                        ${product?.price}.00
                                                     </span>
                                                 </div>
                                             </Link>

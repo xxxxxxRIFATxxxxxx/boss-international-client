@@ -1,11 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import useProducts from "../../hooks/useProducts";
 import Spinner from "../Common/Spinner";
 
-const Featured = () => {
-    const { products } = useProducts();
-
+const Featured = ({ products }) => {
     return (
         <section className="featured spad">
             <div className="container">
@@ -17,7 +14,7 @@ const Featured = () => {
                     </div>
                 </div>
 
-                {products.length === 0 && (
+                {products?.length === 0 && (
                     <div className="text-center mx-auto">
                         <Spinner />
                     </div>
@@ -27,17 +24,17 @@ const Featured = () => {
                     {products.slice(0, 8).map((product) => {
                         return (
                             <div
-                                key={product._id}
+                                key={product?._id}
                                 className="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat"
                             >
                                 <div className="featured__item">
                                     <div
                                         className="featured__item__pic set-bg"
-                                        data-setbg={product.thumbnail}
+                                        data-setbg={product?.thumbnail}
                                     >
                                         <img
                                             className="img-fluid"
-                                            src={product.thumbnail}
+                                            src={product?.thumbnail}
                                             alt="image"
                                         />
                                         <ul className="featured__item__pic__hover">
@@ -61,12 +58,12 @@ const Featured = () => {
                                     <div className="featured__item__text">
                                         <h6>
                                             <Link
-                                                to={`/productDetails/${product._id}`}
+                                                to={`/productDetails/${product?._id}`}
                                             >
-                                                {product.title}
+                                                {product?.title}
                                             </Link>
                                         </h6>
-                                        <h5>${product.price}.00</h5>
+                                        <h5>${product?.price}.00</h5>
                                     </div>
                                 </div>
                             </div>

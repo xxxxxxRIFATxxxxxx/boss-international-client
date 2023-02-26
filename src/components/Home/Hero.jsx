@@ -1,11 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import useCategories from "../../hooks/useCategories";
 import Spinner from "../Common/Spinner";
 
-const Hero = () => {
-    const { categories } = useCategories();
-
+const Hero = ({ categories }) => {
     return (
         <section className="hero">
             <div className="container">
@@ -17,7 +14,7 @@ const Hero = () => {
                                 <span>All categories</span>
                             </div>
 
-                            {categories.length === 0 && (
+                            {categories?.length === 0 && (
                                 <div className="text-center py-5">
                                     <Spinner />
                                 </div>
@@ -25,17 +22,17 @@ const Hero = () => {
 
                             <ul
                                 className={`${
-                                    categories.length > 0 ? "block" : "d-none"
+                                    categories?.length > 0 ? "block" : "d-none"
                                 }`}
                             >
                                 {categories.map((category) => {
                                     return (
-                                        <li key={category._id}>
+                                        <li key={category?._id}>
                                             <Link
-                                                to={`/shop?category=${category.title}`}
+                                                to={`/shop?category=${category?.title}`}
                                                 className="category-list-item"
                                             >
-                                                {category.title}
+                                                {category?.title}
                                             </Link>
                                         </li>
                                     );
