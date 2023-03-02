@@ -5,18 +5,17 @@ import Categories from "../components/Home/Categories";
 import Featured from "../components/Home/Featured";
 import Hero from "../components/Home/Hero";
 import LatestProduct from "../components/Home/LatestProduct";
-import Layout from "../components/Layout/Layout";
 
-const Home = () => {
+const Home = ({ products, categories }) => {
     return (
-        <Layout>
-            <Hero />
-            <Categories />
-            <Featured />
+        <>
+            <Hero categories={categories} />
+            <Categories categories={categories} />
+            <Featured products={products} />
             <Banner />
-            <LatestProduct />
+            <LatestProduct products={products} />
             <Blogs />
-        </Layout>
+        </>
     );
 };
 

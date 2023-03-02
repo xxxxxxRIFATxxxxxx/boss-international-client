@@ -1,27 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { Autoplay } from "swiper";
-
-// Swiper
-import "swiper/css";
-import { Swiper, SwiperSlide } from "swiper/react";
 import Spinner from "../Common/Spinner";
 
-const Categories = () => {
-    const [categories, setCategories] = useState([]);
+// Swiper
+import { Autoplay } from "swiper";
+import "swiper/css";
+import { Swiper, SwiperSlide } from "swiper/react";
 
-    useEffect(() => {
-        fetch(`${process.env.REACT_APP_API_URL}/category`)
-            .then((res) => res.json())
-            .then((data) => {
-                setCategories(data.result);
-            });
-    }, [categories]);
-
+const Categories = ({ categories }) => {
     return (
         <section className="categories">
             <div className="container">
-                {categories.length === 0 && (
+                {categories?.length === 0 && (
                     <div className="text-center">
                         <Spinner />
                     </div>
@@ -40,19 +30,19 @@ const Categories = () => {
                 >
                     {categories.map((category) => {
                         return (
-                            <SwiperSlide>
+                            <SwiperSlide key={category?._id}>
                                 <div className="categories__item light-silver-bg">
                                     <img
                                         className="img-fluid"
-                                        src={category.image}
+                                        src={category?.image}
                                         alt=""
                                     />
 
                                     <h5>
                                         <Link
-                                            href={`/shop?category=${category.title}`}
+                                            href={`/shop?category=${category?.title}`}
                                         >
-                                            {category.title}
+                                            {category?.title}
                                         </Link>
                                     </h5>
                                 </div>
