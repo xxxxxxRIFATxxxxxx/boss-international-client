@@ -90,6 +90,22 @@ const useOrders = () => {
         return promise;
     };
 
+    const getUserOrders = (userId) => {
+        const promise = new Promise((resolve, reject) => {
+            fetch(`${process.env.REACT_APP_API_URL}/orders?userId=${userId}`)
+                .then((res) => res.json())
+                .then((data) => {
+                    const result = data.result;
+                    resolve(result);
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+
+        return promise;
+    };
+
     useEffect(() => {
         setIsLoading(true);
 
@@ -116,6 +132,7 @@ const useOrders = () => {
         updateOrder,
         deleteOrder,
         getOrder,
+        getUserOrders,
     };
 };
 

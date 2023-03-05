@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Spinner from "../Common/Spinner";
+import SuccessAlert from "../Common/SuccessAlert";
 
-const Featured = ({ products }) => {
+const Featured = ({ products, handleCart, showSuccessAlert }) => {
     return (
         <section className="featured spad">
             <div className="container">
@@ -32,24 +33,31 @@ const Featured = ({ products }) => {
                                         className="featured__item__pic set-bg"
                                         data-setbg={product?.thumbnail}
                                     >
-                                        <img
-                                            className="img-fluid"
-                                            src={product?.thumbnail}
-                                            alt="image"
-                                        />
+                                        <Link
+                                            to={`/productDetails/${product?._id}`}
+                                        >
+                                            <img
+                                                className="img-fluid"
+                                                src={product?.thumbnail}
+                                                alt="image"
+                                            />
+                                        </Link>
+
                                         <ul className="featured__item__pic__hover">
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-heart"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-retweet"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
+                                            <li style={{ cursor: "pointer" }}>
+                                                <a
+                                                    onClick={() =>
+                                                        handleCart({
+                                                            id: product._id,
+                                                            title: product.title,
+                                                            price: product.price,
+                                                            thumbnail:
+                                                                product.thumbnail,
+                                                            quantity:
+                                                                parseInt(1),
+                                                        })
+                                                    }
+                                                >
                                                     <i className="fa fa-shopping-cart"></i>
                                                 </a>
                                             </li>
@@ -71,6 +79,19 @@ const Featured = ({ products }) => {
                     })}
                 </div>
             </div>
+
+            {showSuccessAlert && (
+                <div
+                    style={{
+                        position: "fixed",
+                        bottom: 0,
+                        right: 0,
+                        zIndex: 10,
+                    }}
+                >
+                    <SuccessAlert message="Product added successfully!" />
+                </div>
+            )}
         </section>
     );
 };

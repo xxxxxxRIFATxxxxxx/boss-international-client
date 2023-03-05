@@ -2,13 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Header = ({ cart }) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const access_token = JSON.parse(localStorage.getItem("access_token"));
+
     return (
         <>
             <div className="humberger__menu__overlay"></div>
 
             <div className="humberger__menu__wrapper">
                 <div className="humberger__menu__logo">
-                    <Link href="#" className="logo header-logo">
+                    <Link to="/" className="logo header-logo">
                         <span className="primary-text">BOSS</span> INTERNATIONAL
                     </Link>
                 </div>
@@ -54,9 +57,16 @@ const Header = ({ cart }) => {
                     </div>
 
                     <div className="header__top__right__auth">
-                        <Link to="/login">
-                            <i className="fa fa-user"></i> Login
-                        </Link>
+                        {user?.email ? (
+                            <>
+                                <i className="fa fa-user pr-2"></i>
+                                {user?.email}
+                            </>
+                        ) : (
+                            <Link to="/login">
+                                <i className="fa fa-user"></i> Login
+                            </Link>
+                        )}
                     </div>
                 </div>
 
@@ -172,9 +182,17 @@ const Header = ({ cart }) => {
                                     </div>
 
                                     <div className="header__top__right__auth">
-                                        <Link to="/login">
-                                            <i className="fa fa-user"></i> Login
-                                        </Link>
+                                        {user?.email ? (
+                                            <>
+                                                <i className="fa fa-user pr-2"></i>
+                                                {user?.email}
+                                            </>
+                                        ) : (
+                                            <Link to="/login">
+                                                <i className="fa fa-user"></i>{" "}
+                                                Login
+                                            </Link>
+                                        )}
                                     </div>
                                 </div>
                             </div>

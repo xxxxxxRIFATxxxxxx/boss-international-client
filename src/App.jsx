@@ -1,18 +1,27 @@
 import { useState } from "react";
 import { useRoutes } from "react-router-dom";
 import "./App.css";
+import PrivateRoute from "./components/Common/PrivateRoute";
 import Layout from "./components/Layout/Layout";
+import useAuth from "./hooks/useAuth";
 import useCategories from "./hooks/useCategories";
 import useProducts from "./hooks/useProducts";
 import Cart from "./pages/Cart";
 import CheckOut from "./pages/CheckOut";
 import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Orders from "./pages/Orders";
 import ProductDetails from "./pages/ProductDetails";
+import SignUp from "./pages/SignUp";
+
+// React JWT
+import { isExpired } from "react-jwt";
 
 function App() {
     const { products } = useProducts();
     const { categories } = useCategories();
     const [cart, setCart] = useState([]);
+    const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
     let totalPrice = 0;
 
@@ -28,8 +37,19 @@ function App() {
 
             if (productExists !== -1) {
                 prevState[productExists].quantity += product.quantity;
+                setShowSuccessAlert(true);
+
+                setTimeout(() => {
+                    setShowSuccessAlert(false);
+                }, 3000);
                 return prevState;
             } else {
+                setShowSuccessAlert(true);
+
+                setTimeout(() => {
+                    setShowSuccessAlert(false);
+                }, 3000);
+
                 return [...prevState, product];
             }
         });
@@ -52,7 +72,12 @@ function App() {
             path: "/",
             element: (
                 <Layout cart={cart}>
-                    <Home products={products} categories={categories} />
+                    <Home
+                        products={products}
+                        categories={categories}
+                        handleCart={handleCart}
+                        showSuccessAlert={showSuccessAlert}
+                    />
                 </Layout>
             ),
         },
@@ -82,12 +107,44 @@ function App() {
         {
             path: "/checkout",
             element: (
-                <Layout cart={cart}>
-                    <CheckOut cart={cart} totalPrice={totalPrice} />
-                </Layout>
+                <PrivateRoute>
+                    <Layout cart={cart}>
+                        <CheckOut cart={cart} totalPrice={totalPrice} />
+                    </Layout>
+                </PrivateRoute>
             ),
         },
+
+        {
+            path: "/orders",
+            element: (
+                <PrivateRoute>
+                    <Layout cart={cart}>
+                        <Orders />
+                    </Layout>
+                </PrivateRoute>
+            ),
+        },
+
+        {
+            path: "/login",
+            element: <Login />,
+        },
+
+        {
+            path: "/signup",
+            element: <SignUp />,
+        },
     ]);
+
+    // Check JWT Token Expired Or Not
+    const { logout } = useAuth();
+    const access_token = JSON.parse(localStorage.getItem("access_token"));
+    const isTokenExpired = isExpired(access_token);
+
+    if (isTokenExpired) {
+        logout();
+    }
 
     return routes;
 }

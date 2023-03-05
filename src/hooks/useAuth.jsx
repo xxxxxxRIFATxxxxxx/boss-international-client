@@ -11,7 +11,7 @@ const useAuth = () => {
         const promise = new Promise((resolve, reject) => {
             fetch(`${process.env.REACT_APP_API_URL}/users`, {
                 method: "POST",
-                headers: { 
+                headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(user),
