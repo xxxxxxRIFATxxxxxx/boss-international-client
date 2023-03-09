@@ -1,82 +1,38 @@
-import { useState } from "react";
+import { isExpired } from "react-jwt";
 import { useRoutes } from "react-router-dom";
 import "./App.css";
+import Layout from "./components/Common/Layout";
 import PrivateRoute from "./components/Common/PrivateRoute";
-import Layout from "./components/Layout/Layout";
 import useAuth from "./hooks/useAuth";
-import useCategories from "./hooks/useCategories";
-import useProducts from "./hooks/useProducts";
+import useCart from "./hooks/useCart";
 import Cart from "./pages/Cart";
-import CheckOut from "./pages/CheckOut";
+import Category from "./pages/Category";
+import Checkout from "./pages/Checkout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import Orders from "./pages/Orders";
+import Order from "./pages/Order";
 import ProductDetails from "./pages/ProductDetails";
 import SignUp from "./pages/SignUp";
-
-// React JWT
-import { isExpired } from "react-jwt";
+import Success from "./pages/Success";
 
 function App() {
-    const { products } = useProducts();
-    const { categories } = useCategories();
-    const [cart, setCart] = useState([]);
-    const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-
-    let totalPrice = 0;
-
-    cart.map((product) => {
-        totalPrice += product.price;
-    });
-
-    const handleCart = (product) => {
-        setCart((prevState) => {
-            const productExists = prevState.findIndex(
-                (prevProuct) => prevProuct.id === product.id
-            );
-
-            if (productExists !== -1) {
-                prevState[productExists].quantity += product.quantity;
-                setShowSuccessAlert(true);
-
-                setTimeout(() => {
-                    setShowSuccessAlert(false);
-                }, 3000);
-                return prevState;
-            } else {
-                setShowSuccessAlert(true);
-
-                setTimeout(() => {
-                    setShowSuccessAlert(false);
-                }, 3000);
-
-                return [...prevState, product];
-            }
-        });
-    };
-
-    const deleteProductFromCart = (productId) => {
-        setCart((prevState) => {
-            const productIndex = prevState.findIndex(
-                (prevProuct) => prevProuct.id === productId
-            );
-
-            prevState.splice(productIndex, 1);
-
-            return prevState;
-        });
-    };
+    const { access_token, logout } = useAuth();
+    const {
+        cart,
+        calculateTotalPrice,
+        addProductToCart,
+        deleteProductFromCart,
+        isSuccess: cartIsSuccess,
+    } = useCart();
 
     let routes = useRoutes([
         {
             path: "/",
             element: (
-                <Layout cart={cart}>
+                <Layout cart={cart} calculateTotalPrice={calculateTotalPrice}>
                     <Home
-                        products={products}
-                        categories={categories}
-                        handleCart={handleCart}
-                        showSuccessAlert={showSuccessAlert}
+                        addProductToCart={addProductToCart}
+                        cartIsSuccess={cartIsSuccess}
                     />
                 </Layout>
             ),
@@ -85,8 +41,20 @@ function App() {
         {
             path: "/productDetails/:productId",
             element: (
-                <Layout cart={cart}>
-                    <ProductDetails handleCart={handleCart} />
+                <Layout cart={cart} calculateTotalPrice={calculateTotalPrice}>
+                    <ProductDetails
+                        addProductToCart={addProductToCart}
+                        cartIsSuccess={cartIsSuccess}
+                    />
+                </Layout>
+            ),
+        },
+
+        {
+            path: "/category",
+            element: (
+                <Layout cart={cart} calculateTotalPrice={calculateTotalPrice}>
+                    <Category />
                 </Layout>
             ),
         },
@@ -94,10 +62,10 @@ function App() {
         {
             path: "/cart",
             element: (
-                <Layout cart={cart}>
+                <Layout cart={cart} calculateTotalPrice={calculateTotalPrice}>
                     <Cart
                         cart={cart}
-                        totalPrice={totalPrice}
+                        calculateTotalPrice={calculateTotalPrice}
                         deleteProductFromCart={deleteProductFromCart}
                     />
                 </Layout>
@@ -108,8 +76,14 @@ function App() {
             path: "/checkout",
             element: (
                 <PrivateRoute>
-                    <Layout cart={cart}>
-                        <CheckOut cart={cart} totalPrice={totalPrice} />
+                    <Layout
+                        cart={cart}
+                        calculateTotalPrice={calculateTotalPrice}
+                    >
+                        <Checkout
+                            cart={cart}
+                            calculateTotalPrice={calculateTotalPrice}
+                        />
                     </Layout>
                 </PrivateRoute>
             ),
@@ -119,8 +93,25 @@ function App() {
             path: "/orders",
             element: (
                 <PrivateRoute>
-                    <Layout cart={cart}>
-                        <Orders />
+                    <Layout
+                        cart={cart}
+                        calculateTotalPrice={calculateTotalPrice}
+                    >
+                        <Order />
+                    </Layout>
+                </PrivateRoute>
+            ),
+        },
+
+        {
+            path: "/success",
+            element: (
+                <PrivateRoute>
+                    <Layout
+                        cart={cart}
+                        calculateTotalPrice={calculateTotalPrice}
+                    >
+                        <Success />
                     </Layout>
                 </PrivateRoute>
             ),
@@ -138,8 +129,6 @@ function App() {
     ]);
 
     // Check JWT Token Expired Or Not
-    const { logout } = useAuth();
-    const access_token = JSON.parse(localStorage.getItem("access_token"));
     const isTokenExpired = isExpired(access_token);
 
     if (isTokenExpired) {

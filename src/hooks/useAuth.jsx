@@ -5,6 +5,8 @@ const useAuth = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+
+    const currentUser = JSON.parse(localStorage.getItem("user"));
     const access_token = JSON.parse(localStorage.getItem("access_token"));
 
     const signUp = (user) => {
@@ -169,6 +171,8 @@ const useAuth = () => {
         getUser,
         login,
         logout,
+        currentUser,
+        access_token,
     };
 };
 

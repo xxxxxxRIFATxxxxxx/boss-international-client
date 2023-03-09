@@ -1,22 +1,19 @@
 import React from "react";
-import Banner from "../components/Home/Banner";
-import Categories from "../components/Home/Categories";
-import Featured from "../components/Home/Featured";
+import About from "../components/Home/About";
+import Contact from "../components/Home/Contact";
 import Hero from "../components/Home/Hero";
-import LatestProduct from "../components/Home/LatestProduct";
+import Product from "../components/Home/Product";
 
-const Home = ({ products, categories, handleCart, showSuccessAlert }) => {
+const Home = ({ addProductToCart, cartIsSuccess }) => {
     return (
         <>
-            <Hero categories={categories} />
-            <Categories categories={categories} />
-            <Featured
-                products={products}
-                handleCart={handleCart}
-                showSuccessAlert={showSuccessAlert}
+            <Hero />
+            <Product
+                addProductToCart={addProductToCart}
+                cartIsSuccess={cartIsSuccess}
             />
-            <Banner />
-            <LatestProduct products={products} />
+            <About />
+            <Contact />
         </>
     );
 };

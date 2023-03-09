@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Category from "../pages/Category";
 
 const useProducts = () => {
     const [products, setProducts] = useState([]);
@@ -90,6 +91,24 @@ const useProducts = () => {
         return promise;
     };
 
+    const getProductsByCategory = (category) => {
+        const promise = new Promise((resolve, reject) => {
+            fetch(
+                `${process.env.REACT_APP_API_URL}/products?category=${category}`
+            )
+                .then((res) => res.json())
+                .then((data) => {
+                    const result = data.result;
+                    resolve(result);
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+
+        return promise;
+    };
+
     useEffect(() => {
         setIsLoading(true);
 
@@ -116,6 +135,7 @@ const useProducts = () => {
         updateProduct,
         deleteProduct,
         getProduct,
+        getProductsByCategory,
     };
 };
 

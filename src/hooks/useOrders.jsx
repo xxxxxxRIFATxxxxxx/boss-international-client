@@ -90,7 +90,7 @@ const useOrders = () => {
         return promise;
     };
 
-    const getUserOrders = (userId) => {
+    const getOrderByUserId = (userId) => {
         const promise = new Promise((resolve, reject) => {
             fetch(`${process.env.REACT_APP_API_URL}/orders?userId=${userId}`)
                 .then((res) => res.json())
@@ -132,7 +132,7 @@ const useOrders = () => {
         updateOrder,
         deleteOrder,
         getOrder,
-        getUserOrders,
+        getOrderByUserId,
     };
 };
 

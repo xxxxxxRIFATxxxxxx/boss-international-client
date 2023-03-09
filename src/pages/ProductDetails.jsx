@@ -1,388 +1,345 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import useProducts from "../hooks/useProducts";
-
 import "swiper/css";
+import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Spinner from "../components/Common/Spinner";
+import SuccessAlert from "../components/Common/SuccessAlert";
+import useProducts from "../hooks/useProducts";
 
-const ProductDetails = ({ handleCart }) => {
+const ProductDetails = ({ addProductToCart, cartIsSuccess }) => {
     const { productId } = useParams();
-    const { getProduct, products } = useProducts();
+    const { getProduct, getProductsByCategory } = useProducts();
     const [product, setProduct] = useState({});
+    const [products, setProducts] = useState([]);
     const [quantity, setQuantity] = useState(1);
+    const [currentImage, setCurrentImage] = useState("");
+
+    const handleCurrentImage = (img) => {
+        setCurrentImage(img);
+    };
 
     useEffect(() => {
-        getProduct(productId).then((data) => setProduct(data));
+        getProduct(productId).then((data) => {
+            setProduct(data);
+            setCurrentImage(data.thumbnail);
+            getProductsByCategory(data.category).then((data) => {
+                setProducts(data);
+            });
+        });
     }, [productId]);
 
     return (
-        <>
-            {product.title ? (
-                <>
-                    {/* <!-- Breadcrumb Section Begin --> */}
-                    <section
-                        className="breadcrumb-section"
-                        style={{ backgroundColor: "#7fad39" }}
-                    >
-                        <div className="container">
-                            <div className="row">
-                                <div className="col-lg-12 text-center">
-                                    <div className="breadcrumb__text">
-                                        <h2 className="pb-2">
-                                            {product?.title}
-                                        </h2>
+        <section className="bg-white" id="about">
+            {!product?.title && (
+                <div className="flex px-4 py-3 justify-center mt-8">
+                    <Spinner />
+                </div>
+            )}
 
-                                        <div className="breadcrumb__option">
-                                            <Link to="/">Home</Link>
-                                            <Link
-                                                to={`/categoryDetails/category=${product?.category}`}
-                                            >
-                                                {product?.category}
-                                            </Link>
-                                            <span>{product?.title}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    {/* <!-- Breadcrumb Section End --> */}
+            {product?.title && (
+                <div className="gap-8 px-4 md:px-0 py-8 container mx-auto xl:gap-16 md:grid md:grid-cols-12 sm:py-16 mb-4">
+                    <div className="col-span-12 md:col-span-6 lg:col-span-2 hidden lg:block"></div>
 
-                    {/* <!-- Product Details Section Begin --> */}
-                    <section className="product-details spad">
-                        <div className="container">
-                            <div className="row">
-                                <div className="col-lg-6 col-md-6">
-                                    <div className="product__details__pic">
-                                        <div className="product__details__pic__item">
+                    <div className="col-span-12 md:col-span-6 lg:col-span-4 mb-8 md:mb-0">
+                        <img
+                            className="w-full mr-auto mb-5"
+                            src={currentImage}
+                            alt=""
+                        />
+
+                        <div>
+                            <Swiper
+                                slidesPerView={4}
+                                spaceBetween={20}
+                                pagination={false}
+                                modules={[]}
+                                className="mySwiper"
+                            >
+                                {product?.images?.map((image) => {
+                                    return (
+                                        <SwiperSlide
+                                            key={Math.random() * Math.random()}
+                                            className="cursor-pointer"
+                                            onClick={() =>
+                                                handleCurrentImage(image)
+                                            }
+                                        >
                                             <img
-                                                className="product__details__pic__item--large"
-                                                src={product?.thumbnail}
+                                                className="w-full"
+                                                src={image}
                                                 alt=""
                                             />
-                                        </div>
+                                        </SwiperSlide>
+                                    );
+                                })}
+                            </Swiper>
+                        </div>
+                    </div>
 
-                                        <div className="product__details__pic__slider ">
-                                            <Swiper
-                                                slidesPerView={4}
-                                                spaceBetween={30}
-                                                navigation={true}
-                                                pagination={{
-                                                    clickable: true,
-                                                }}
-                                                autoplay={true}
-                                                className="mySwiper"
-                                            >
-                                                {product?.images?.map(
-                                                    (image) => {
-                                                        return (
-                                                            <SwiperSlide
-                                                                className="border"
-                                                                key={Math.random()}
-                                                            >
-                                                                <img
-                                                                    data-imgbigurl={
-                                                                        image
-                                                                    }
-                                                                    src={image}
-                                                                    alt=""
-                                                                />
-                                                            </SwiperSlide>
-                                                        );
-                                                    }
-                                                )}
-                                            </Swiper>
-                                        </div>
+                    <div className="col-span-12 md:col-span-6 lg:col-span-4">
+                        <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">
+                            {product?.title}
+                        </h2>
+
+                        <div className="flex items-center mb-4">
+                            <svg
+                                aria-hidden="true"
+                                className="w-5 h-5 text-yellow-300"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <title>First star</title>
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+
+                            <svg
+                                aria-hidden="true"
+                                className="w-5 h-5 text-yellow-300"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <title>Second star</title>
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+
+                            <svg
+                                aria-hidden="true"
+                                className="w-5 h-5 text-yellow-300"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <title>Third star</title>
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+
+                            <svg
+                                aria-hidden="true"
+                                className="w-5 h-5 text-yellow-300"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <title>Fourth star</title>
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+
+                            <svg
+                                aria-hidden="true"
+                                className="w-5 h-5 text-yellow-300"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <title>Fifth star</title>
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+
+                            <span className="bg-primary-100 text-primary-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">
+                                5.0
+                            </span>
+                        </div>
+
+                        <div className="text-3xl font-bold text-gray-900 mb-4">
+                            ${product?.price}
+                        </div>
+
+                        <p className="mb-4 font-light text-gray-500 md:text-lg">
+                            {product?.description}
+                        </p>
+
+                        <div className="grid grid-cols-12 gap-4 mb-6">
+                            <div className="col-span-3">
+                                <input
+                                    type="number"
+                                    className="bg-gray-50 text-center border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full px-2.5 py-3"
+                                    value={quantity}
+                                    onChange={(e) =>
+                                        setQuantity(e.target.value)
+                                    }
+                                />
+                            </div>
+
+                            <div className="col-span-9">
+                                <button
+                                    onClick={() => {
+                                        addProductToCart({
+                                            id: product?._id,
+                                            title: product?.title,
+                                            price: product?.price,
+                                            thumbnail: product?.thumbnail,
+                                            quantity: parseInt(quantity),
+                                        });
+                                    }}
+                                    className="text-white w-full bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-3 text-center"
+                                >
+                                    Add to cart
+                                </button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div className="flex items-center justify-between mb-4">
+                                <h4 className="text-base font-bold">
+                                    Availability
+                                </h4>
+
+                                <p>{product?.availability}</p>
+                            </div>
+
+                            <div className="flex items-center justify-between mb-4">
+                                <h4 className="text-base font-bold">
+                                    Shipping
+                                </h4>
+
+                                <p>{product?.shipping}</p>
+                            </div>
+
+                            <div className="flex items-center justify-between">
+                                <h4 className="text-base font-bold">Weight</h4>
+
+                                <p>{product?.weight}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="col-span-12 md:col-span-6 lg:col-span-2 hidden lg:block"></div>
+                </div>
+            )}
+
+            <div className="px-4 md:px-0 py-8 container mx-auto sm:py-16">
+                <h2 className="mb-14 text-4xl tracking-tight font-extrabold text-center text-gray-900">
+                    Related Product
+                </h2>
+
+                {products?.length === 0 && (
+                    <div className="flex px-4 py-3 justify-center">
+                        <Spinner />
+                    </div>
+                )}
+
+                {cartIsSuccess && (
+                    <div className="fixed bottom-0 right-0">
+                        <SuccessAlert message="Product added successfully!" />
+                    </div>
+                )}
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    {products.map((product) => {
+                        return (
+                            <div
+                                className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow"
+                                key={product._id}
+                            >
+                                <Link to={`/productDetails/${product?._id}`}>
+                                    <img
+                                        className="p-8 rounded-t-lg"
+                                        src={product.thumbnail}
+                                        alt=""
+                                    />
+                                </Link>
+
+                                <div className="px-5 pb-5">
+                                    <Link
+                                        to={`/productDetails/${product?._id}`}
+                                    >
+                                        <h5 className="text-xl font-semibold tracking-tight text-gray-900">
+                                            {product?.title}
+                                        </h5>
+                                    </Link>
+
+                                    <div className="flex items-center mt-2.5 mb-5">
+                                        <svg
+                                            aria-hidden="true"
+                                            className="w-5 h-5 text-yellow-300"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <title>First star</title>
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                        </svg>
+
+                                        <svg
+                                            aria-hidden="true"
+                                            className="w-5 h-5 text-yellow-300"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <title>Second star</title>
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                        </svg>
+
+                                        <svg
+                                            aria-hidden="true"
+                                            className="w-5 h-5 text-yellow-300"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <title>Third star</title>
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                        </svg>
+
+                                        <svg
+                                            aria-hidden="true"
+                                            className="w-5 h-5 text-yellow-300"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <title>Fourth star</title>
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                        </svg>
+
+                                        <svg
+                                            aria-hidden="true"
+                                            className="w-5 h-5 text-yellow-300"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <title>Fifth star</title>
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                        </svg>
+
+                                        <span className="bg-primary-100 text-primary-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">
+                                            5.0
+                                        </span>
                                     </div>
-                                </div>
 
-                                <div className="col-lg-6 col-md-6">
-                                    <div className="product__details__text">
-                                        <h3>{product?.title}</h3>
-
-                                        <div className="product__details__rating">
-                                            <i className="fa fa-star"></i>
-                                            <i className="fa fa-star"></i>
-                                            <i className="fa fa-star"></i>
-                                            <i className="fa fa-star"></i>
-                                            <i className="fa fa-star"></i>
-                                            {/* <i className="fa fa-star-half-o"></i> */}
-                                            <span>
-                                                ({product?.reviews?.length}{" "}
-                                                reviews)
-                                            </span>
-                                        </div>
-
-                                        <div className="product__details__price">
-                                            ${product?.price}.00
-                                        </div>
-                                        <p>{product?.description}</p>
-
-                                        <div className="product__details__quantity">
-                                            <div className="quantity">
-                                                <div className="pro-qty">
-                                                    <input
-                                                        type="number"
-                                                        value={quantity}
-                                                        onChange={(e) =>
-                                                            setQuantity(
-                                                                e.target.value
-                                                            )
-                                                        }
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-3xl font-bold text-gray-900">
+                                            ${product?.price}
+                                        </span>
 
                                         <button
-                                            onClick={() =>
-                                                handleCart({
+                                            onClick={() => {
+                                                addProductToCart({
                                                     id: product._id,
                                                     title: product.title,
                                                     price: product.price,
                                                     thumbnail:
                                                         product.thumbnail,
-                                                    quantity:
-                                                        parseInt(quantity),
-                                                })
-                                            }
-                                            className="primary-btn"
+                                                    quantity: parseInt(1),
+                                                });
+                                            }}
+                                            className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                                         >
-                                            ADD TO CARD
+                                            Add to cart
                                         </button>
-
-                                        <a href="#" className="heart-icon">
-                                            <span className="icon_heart_alt"></span>
-                                        </a>
-
-                                        <ul>
-                                            <li>
-                                                <b>Availability</b>{" "}
-                                                <span>
-                                                    {product?.availability}
-                                                </span>
-                                            </li>
-
-                                            <li>
-                                                <b>Shipping</b>
-                                                <span>
-                                                    {product?.shipping}{" "}
-                                                    <samp>
-                                                        Free pickup today
-                                                    </samp>
-                                                </span>
-                                            </li>
-
-                                            <li>
-                                                <b>Weight</b>{" "}
-                                                <span>{product?.weight}</span>
-                                            </li>
-
-                                            <li>
-                                                <b>Share on</b>
-                                                <div className="share">
-                                                    <a href="#">
-                                                        <i className="fa fa-facebook"></i>
-                                                    </a>
-                                                    <a href="#">
-                                                        <i className="fa fa-twitter"></i>
-                                                    </a>
-                                                    <a href="#">
-                                                        <i className="fa fa-instagram"></i>
-                                                    </a>
-                                                    <a href="#">
-                                                        <i className="fa fa-pinterest"></i>
-                                                    </a>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <div className="col-lg-12">
-                                    <div className="product__details__tab">
-                                        <ul
-                                            className="nav nav-tabs"
-                                            role="tablist"
-                                        >
-                                            <li className="nav-item">
-                                                <a
-                                                    className="nav-link active"
-                                                    data-toggle="tab"
-                                                    href="#tabs-1"
-                                                    role="tab"
-                                                    aria-selected="true"
-                                                >
-                                                    Description
-                                                </a>
-                                            </li>
-
-                                            <li className="nav-item">
-                                                <a
-                                                    className="nav-link"
-                                                    data-toggle="tab"
-                                                    href="#tabs-2"
-                                                    role="tab"
-                                                    aria-selected="false"
-                                                >
-                                                    Information
-                                                </a>
-                                            </li>
-
-                                            <li className="nav-item">
-                                                <a
-                                                    className="nav-link"
-                                                    data-toggle="tab"
-                                                    href="#tabs-3"
-                                                    role="tab"
-                                                    aria-selected="false"
-                                                >
-                                                    Reviews{" "}
-                                                    <span>
-                                                        (
-                                                        {
-                                                            product?.reviews
-                                                                ?.length
-                                                        }
-                                                        )
-                                                    </span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                        <div className="tab-content">
-                                            <div
-                                                className="tab-pane active"
-                                                id="tabs-1"
-                                                role="tabpanel"
-                                            >
-                                                <div className="product__details__tab__desc">
-                                                    <h6>
-                                                        Products Description
-                                                    </h6>
-
-                                                    <p>
-                                                        {product?.description}
-                                                    </p>
-                                                </div>
-                                            </div>
-
-                                            <div
-                                                className="tab-pane"
-                                                id="tabs-2"
-                                                role="tabpanel"
-                                            >
-                                                <div className="product__details__tab__desc">
-                                                    <h6>Products Infomation</h6>
-
-                                                    <p>
-                                                        <p>
-                                                            {
-                                                                product?.description
-                                                            }
-                                                        </p>
-                                                    </p>
-                                                </div>
-                                            </div>
-
-                                            <div
-                                                className="tab-pane"
-                                                id="tabs-3"
-                                                role="tabpanel"
-                                            >
-                                                <div className="product__details__tab__desc">
-                                                    <h6>Products Reviews</h6>
-
-                                                    <p>No reviews</p>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </section>
-                    {/* <!-- Product Details Section End --> */}
-
-                    {/* <!-- Related Product Section Begin --> */}
-                    <section className="related-product">
-                        <div className="container">
-                            <div className="row">
-                                <div className="col-lg-12">
-                                    <div className="section-title related__product__title">
-                                        <h2>Related Product</h2>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="row">
-                                {products.map((relatedProduct) => {
-                                    if (
-                                        relatedProduct.category ===
-                                        product.category
-                                    ) {
-                                        return (
-                                            <div className="col-lg-3 col-md-4 col-sm-6">
-                                                <div className="product__item">
-                                                    <div className="product__item__pic">
-                                                        <img
-                                                            className="img-fluid"
-                                                            src={
-                                                                relatedProduct?.thumbnail
-                                                            }
-                                                            alt=""
-                                                        />
-
-                                                        <ul className="product__item__pic__hover">
-                                                            <li>
-                                                                <a href="#">
-                                                                    <i className="fa fa-heart"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">
-                                                                    <i className="fa fa-retweet"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">
-                                                                    <i className="fa fa-shopping-cart"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div className="product__item__text">
-                                                        <h6>
-                                                            <a href="#">
-                                                                {
-                                                                    relatedProduct?.title
-                                                                }
-                                                            </a>
-                                                        </h6>
-                                                        <h5>
-                                                            $
-                                                            {
-                                                                relatedProduct?.price
-                                                            }
-                                                            .00
-                                                        </h5>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        );
-                                    }
-                                })}
-                            </div>
-                        </div>
-                    </section>
-                    {/* <!-- Related Product Section End --> */}
-                </>
-            ) : (
-                <div className="text-center mx-auto py-5">
-                    <Spinner />
+                        );
+                    })}
                 </div>
-            )}
-        </>
+            </div>
+        </section>
     );
 };
 
