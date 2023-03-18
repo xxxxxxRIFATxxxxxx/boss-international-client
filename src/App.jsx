@@ -7,7 +7,7 @@ import useAuth from "./hooks/useAuth";
 import useCart from "./hooks/useCart";
 import Cart from "./pages/Cart";
 import Category from "./pages/Category";
-import Checkout from "./pages/Checkout";
+import Checkout from "./pages/CheckOut";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Order from "./pages/Order";

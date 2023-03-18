@@ -5,7 +5,7 @@ import useAuth from "../hooks/useAuth";
 import useOrders from "../hooks/useOrders";
 import usePayment from "../hooks/usePayment";
 
-const Checkout = ({ cart, calculateTotalPrice }) => {
+const Checkout = ({ cart, calculateTotalPrice }) => { 
     const { createOrder } = useOrders();
     const { currentUser } = useAuth();
     const { stripePayment } = usePayment();
