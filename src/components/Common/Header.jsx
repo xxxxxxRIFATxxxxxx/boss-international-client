@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import logo from "../../images/logo.png";
 
 const Header = ({ cart, calculateTotalPrice }) => {
     const location = useLocation();
@@ -88,14 +89,10 @@ const Header = ({ cart, calculateTotalPrice }) => {
             <nav className="bg-white px-4 md:px-0 py-2.5 shadow">
                 <div className="container flex flex-wrap items-center justify-between mx-auto">
                     <Link to="/" className="flex items-center">
-                        <img
-                            src="https://flowbite.com/docs/images/logo.svg"
-                            className="h-6 mr-3 sm:h-9"
-                            alt=""
-                        />
+                        <img src={logo} className="h-6 mr-3 sm:h-9" alt="" />
 
                         <span className="self-center text-xl font-semibold whitespace-nowrap text-primary">
-                            BOSS
+                            BOSS International <br /> Logistics co, LTD
                         </span>
                     </Link>
 

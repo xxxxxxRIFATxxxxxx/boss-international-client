@@ -41,7 +41,7 @@ const Hero = () => {
                 </div>
 
                 <div className="col-span-12 md:col-span-7 lg:col-span-9">
-                    <section className="bg-primary-50 h-full flex items-center rounded-lg">
+                    <section className="bg-gray-100 h-full flex items-center rounded-lg">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 p-10 lg:p-20">
                             <div className="flex items-center text-center lg:text-start">
                                 <div>
