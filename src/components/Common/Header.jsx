@@ -4,13 +4,9 @@ import useAuth from "../../hooks/useAuth";
 import logo from "../../images/logo.png";
 
 const Header = ({ cart, calculateTotalPrice }) => {
-    const location = useLocation();
-
     const { logout, currentUser } = useAuth();
 
-    const [active, setActive] = useState(
-        location.pathname === "/orders" ? "Orders" : "Home"
-    );
+    const [active, setActive] = useState("Home");
     const [showNav, setShowNav] = useState(false);
     const [stickyClass, setStickyClass] = useState("relative");
 
@@ -34,6 +30,16 @@ const Header = ({ cart, calculateTotalPrice }) => {
                 : setStickyClass("relative");
         }
     };
+
+    useEffect(() => {
+        if (window.location.pathname === "/shop") {
+            setActive("Shop");
+        } else if (window.location.pathname === "/team") {
+            setActive("Team");
+        } else if (window.location.pathname === "/faq") {
+            setActive("Faq");
+        }
+    }, []);
 
     useEffect(() => {
         window.addEventListener("scroll", stickNavbar);
@@ -160,6 +166,19 @@ const Header = ({ cart, calculateTotalPrice }) => {
                                 </NavLink>
                             </li>
 
+                            <li onClick={() => handleActive("Shop")}>
+                                <NavLink
+                                    to="/shop"
+                                    className={`block py-2 pl-3 pr-4 text-gray-700 rounded md:hover:bg-transparent md:hover:text-primary-700 md:p-0 ${
+                                        active === "Shop"
+                                            ? "text-white bg-primary-700 md:bg-transparent md:text-primary-700 font-bold"
+                                            : "text-gray-700"
+                                    }`}
+                                >
+                                    Shop
+                                </NavLink>
+                            </li>
+
                             <li onClick={() => handleActive("About")}>
                                 <a
                                     href="/#about"
@@ -183,6 +202,32 @@ const Header = ({ cart, calculateTotalPrice }) => {
                                     }`}
                                 >
                                     Contact
+                                </a>
+                            </li>
+
+                            <li onClick={() => handleActive("Store")}>
+                                <a
+                                    href="/team"
+                                    className={`block py-2 pl-3 pr-4 text-gray-700 rounded md:hover:bg-transparent md:hover:text-primary-700 md:p-0 ${
+                                        active === "Team"
+                                            ? "text-white bg-primary-700 md:bg-transparent md:text-primary-700 font-bold"
+                                            : "text-gray-700"
+                                    }`}
+                                >
+                                    Team
+                                </a>
+                            </li>
+
+                            <li onClick={() => handleActive("Faq")}>
+                                <a
+                                    href="/faq"
+                                    className={`block py-2 pl-3 pr-4 text-gray-700 rounded md:hover:bg-transparent md:hover:text-primary-700 md:p-0 ${
+                                        active === "Faq"
+                                            ? "text-white bg-primary-700 md:bg-transparent md:text-primary-700 font-bold"
+                                            : "text-gray-700"
+                                    }`}
+                                >
+                                    Faq
                                 </a>
                             </li>
 

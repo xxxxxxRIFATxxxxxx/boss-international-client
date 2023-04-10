@@ -14,6 +14,9 @@ import Order from "./pages/Order";
 import ProductDetails from "./pages/ProductDetails";
 import SignUp from "./pages/SignUp";
 import Success from "./pages/Success";
+import Shop from "./pages/Shop";
+import Faq from "./pages/Faq";
+import Team from "./pages/Team";
 
 function App() {
     const { access_token, logout } = useAuth();
@@ -68,6 +71,36 @@ function App() {
                         calculateTotalPrice={calculateTotalPrice}
                         deleteProductFromCart={deleteProductFromCart}
                     />
+                </Layout>
+            ),
+        },
+
+        {
+            path: "/shop",
+            element: (
+                <Layout cart={cart} calculateTotalPrice={calculateTotalPrice}>
+                    <Shop
+                        addProductToCart={addProductToCart}
+                        cartIsSuccess={cartIsSuccess}
+                    />
+                </Layout>
+            ),
+        },
+
+        {
+            path: "/faq",
+            element: (
+                <Layout cart={cart} calculateTotalPrice={calculateTotalPrice}>
+                    <Faq />
+                </Layout>
+            ),
+        },
+
+        {
+            path: "/team",
+            element: (
+                <Layout cart={cart} calculateTotalPrice={calculateTotalPrice}>
+                    <Team />
                 </Layout>
             ),
         },
