@@ -11,7 +11,7 @@ const Footer = () => {
                         <Link to="/" className="flex items-center mb-6">
                             <img src={logo} className="mr-3 h-8" alt="" />
                             <span className="self-center text-2xl font-semibold whitespace-nowrap">
-                                BOSS International <br /> Logistics co, LTD
+                                BOSS International <br />
                             </span>
                         </Link>
 

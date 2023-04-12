@@ -98,7 +98,7 @@ const Header = ({ cart, calculateTotalPrice }) => {
                         <img src={logo} className="h-6 mr-3 sm:h-9" alt="" />
 
                         <span className="self-center text-xl font-semibold whitespace-nowrap text-primary">
-                            BOSS International <br /> Logistics co, LTD
+                            BOSS International
                         </span>
                     </Link>
 
