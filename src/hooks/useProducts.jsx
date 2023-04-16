@@ -109,6 +109,27 @@ const useProducts = () => {
         return promise;
     };
 
+    const getProductsByTitle = (title) => {
+        const promise = new Promise((resolve, reject) => {
+            fetch(`${process.env.REACT_APP_API_URL}/products?title=${title}`)
+                .then((res) => res.json())
+                .then((data) => {
+                    const result = data.result;
+
+                    if (result.length > 0) {
+                        resolve(result);
+                    } else {
+                        resolve("No result found!");
+                    }
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+
+        return promise;
+    };
+
     useEffect(() => {
         setIsLoading(true);
 
@@ -136,6 +157,7 @@ const useProducts = () => {
         deleteProduct,
         getProduct,
         getProductsByCategory,
+        getProductsByTitle,
     };
 };
 

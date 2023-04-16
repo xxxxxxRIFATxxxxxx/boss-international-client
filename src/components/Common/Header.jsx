@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import {
+    Link,
+    NavLink,
+    Navigate,
+    useLocation,
+    useNavigate,
+} from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import logo from "../../images/logo.png";
 
@@ -49,11 +55,29 @@ const Header = ({ cart, calculateTotalPrice }) => {
         };
     }, []);
 
+    // For Search
+    const [searchText, setSearchText] = useState("");
+    const [showSearch, setShowSearch] = useState(false);
+    const navigate = useNavigate();
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        navigate(`/search?title=${searchText}`);
+        setSearchText("");
+        setShowSearch(false);
+    };
+
+    const handleShowSearch = () => {
+        setShowSearch((prevState) => {
+            return !prevState;
+        });
+    };
+
     return (
         <div
             className={`header-section transition-all duration-500 ease-in-out ${stickyClass}`}
         >
-            <div className="bg-gray-50 py-1">
+            <div className="bg-gray-50 py-1 relative">
                 <div className="container mx-auto flex items-center justify-between px-4 md:px-0">
                     <div>
                         Welcome,{" "}
@@ -69,6 +93,26 @@ const Header = ({ cart, calculateTotalPrice }) => {
                     </div>
 
                     <div className="flex items-center">
+                        <button onClick={handleShowSearch}>
+                            <i className="fa-solid fa-magnifying-glass text-sm hover:text-primary-700"></i>
+                        </button>
+
+                        <form
+                            onSubmit={handleSearch}
+                            className={`${
+                                showSearch ? "opacity-100" : "opacity-0"
+                            } transition-all duration-100`}
+                        >
+                            <input
+                                type="text"
+                                className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-fit p-2.5 absolute top-10 right-[12%]"
+                                placeholder="search product by title"
+                                required
+                                value={searchText}
+                                onChange={(e) => setSearchText(e.target.value)}
+                            />
+                        </form>
+
                         <Link
                             to="/cart"
                             className="relative inline-flex items-center p-3 text-sm font-medium text-center text-dark focus:outline-none focus:ring-0 mr-5"

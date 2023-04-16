@@ -17,6 +17,7 @@ import Success from "./pages/Success";
 import Shop from "./pages/Shop";
 import Faq from "./pages/Faq";
 import Team from "./pages/Team";
+import Search from "./pages/Search";
 
 function App() {
     const { access_token, logout } = useAuth();
@@ -58,6 +59,15 @@ function App() {
             element: (
                 <Layout cart={cart} calculateTotalPrice={calculateTotalPrice}>
                     <Category />
+                </Layout>
+            ),
+        },
+
+        {
+            path: "/search",
+            element: (
+                <Layout cart={cart} calculateTotalPrice={calculateTotalPrice}>
+                    <Search />
                 </Layout>
             ),
         },
