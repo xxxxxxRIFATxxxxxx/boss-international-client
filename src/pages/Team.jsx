@@ -25,14 +25,14 @@ const Team = () => {
                         </a>
                         <div class="p-5">
                             <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                                <a href="#">Bonnie Green</a>
+                                <a href="#">Bondhon Das</a>
                             </h3>
                             <span class="text-gray-500 dark:text-gray-400">
                                 CEO & Web Developer
                             </span>
                             <p class="mt-3 mb-4 font-light text-gray-500 dark:text-gray-400">
-                                Bonnie drives the technical strategy of the
-                                flowbite platform and brand.
+                                Bondhon Das the technical strategy of the Boss
+                                International platform and brand.
                             </p>
                             <ul class="flex space-x-4 sm:mt-0">
                                 <li>

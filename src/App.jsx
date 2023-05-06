@@ -5,19 +5,21 @@ import Layout from "./components/Common/Layout";
 import PrivateRoute from "./components/Common/PrivateRoute";
 import useAuth from "./hooks/useAuth";
 import useCart from "./hooks/useCart";
+import About from "./pages/About";
 import Cart from "./pages/Cart";
 import Category from "./pages/Category";
 import Checkout from "./pages/CheckOut";
+import Contact from "./pages/Contact";
+import Faq from "./pages/Faq";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Order from "./pages/Order";
 import ProductDetails from "./pages/ProductDetails";
+import Search from "./pages/Search";
+import Shop from "./pages/Shop";
 import SignUp from "./pages/SignUp";
 import Success from "./pages/Success";
-import Shop from "./pages/Shop";
-import Faq from "./pages/Faq";
 import Team from "./pages/Team";
-import Search from "./pages/Search";
 
 function App() {
     const { access_token, logout } = useAuth();
@@ -111,6 +113,24 @@ function App() {
             element: (
                 <Layout cart={cart} calculateTotalPrice={calculateTotalPrice}>
                     <Team />
+                </Layout>
+            ),
+        },
+
+        {
+            path: "/about",
+            element: (
+                <Layout cart={cart} calculateTotalPrice={calculateTotalPrice}>
+                    <About />
+                </Layout>
+            ),
+        },
+
+        {
+            path: "/contact",
+            element: (
+                <Layout cart={cart} calculateTotalPrice={calculateTotalPrice}>
+                    <Contact />
                 </Layout>
             ),
         },

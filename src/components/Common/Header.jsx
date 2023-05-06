@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-    Link,
-    NavLink,
-    Navigate,
-    useLocation,
-    useNavigate,
-} from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import logo from "../../images/logo.png";
 
@@ -44,6 +38,10 @@ const Header = ({ cart, calculateTotalPrice }) => {
             setActive("Team");
         } else if (window.location.pathname === "/faq") {
             setActive("Faq");
+        } else if (window.location.pathname === "/about") {
+            setActive("About");
+        } else if (window.location.pathname === "/contact") {
+            setActive("Contact");
         }
     }, []);
 
@@ -93,7 +91,7 @@ const Header = ({ cart, calculateTotalPrice }) => {
                     </div>
 
                     <div className="flex items-center">
-                        <button onClick={handleShowSearch}>
+                        <button className="mr-14" onClick={handleShowSearch}>
                             <i className="fa-solid fa-magnifying-glass text-sm hover:text-primary-700"></i>
                         </button>
 
@@ -115,7 +113,7 @@ const Header = ({ cart, calculateTotalPrice }) => {
 
                         <Link
                             to="/cart"
-                            className="relative inline-flex items-center p-3 text-sm font-medium text-center text-dark focus:outline-none focus:ring-0 mr-5"
+                            className="relative inline-flex items-center p-3 text-sm font-medium text-center text-dark focus:outline-none focus:ring-0 mr-14"
                         >
                             <i className="fa-solid fa-cart-shopping text-sm hover:text-primary-700"></i>
 
@@ -225,7 +223,7 @@ const Header = ({ cart, calculateTotalPrice }) => {
 
                             <li onClick={() => handleActive("About")}>
                                 <a
-                                    href="/#about"
+                                    href="/about"
                                     className={`block py-2 pl-3 pr-4 text-gray-700 rounded md:hover:bg-transparent md:hover:text-primary-700 md:p-0 ${
                                         active === "About"
                                             ? "text-white bg-primary-700 md:bg-transparent md:text-primary-700 font-bold"
@@ -238,7 +236,7 @@ const Header = ({ cart, calculateTotalPrice }) => {
 
                             <li onClick={() => handleActive("Contact")}>
                                 <a
-                                    href="/#contact"
+                                    href="/contact"
                                     className={`block py-2 pl-3 pr-4 text-gray-700 rounded md:hover:bg-transparent md:hover:text-primary-700 md:p-0 ${
                                         active === "Contact"
                                             ? "text-white bg-primary-700 md:bg-transparent md:text-primary-700 font-bold"
