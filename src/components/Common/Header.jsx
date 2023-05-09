@@ -222,8 +222,8 @@ const Header = ({ cart, calculateTotalPrice }) => {
                             </li>
 
                             <li onClick={() => handleActive("About")}>
-                                <a
-                                    href="/about"
+                                <Link
+                                    to="/about"
                                     className={`block py-2 pl-3 pr-4 text-gray-700 rounded md:hover:bg-transparent md:hover:text-primary-700 md:p-0 ${
                                         active === "About"
                                             ? "text-white bg-primary-700 md:bg-transparent md:text-primary-700 font-bold"
@@ -231,12 +231,12 @@ const Header = ({ cart, calculateTotalPrice }) => {
                                     }`}
                                 >
                                     About
-                                </a>
+                                </Link>
                             </li>
 
                             <li onClick={() => handleActive("Contact")}>
-                                <a
-                                    href="/contact"
+                                <Link
+                                    to="/contact"
                                     className={`block py-2 pl-3 pr-4 text-gray-700 rounded md:hover:bg-transparent md:hover:text-primary-700 md:p-0 ${
                                         active === "Contact"
                                             ? "text-white bg-primary-700 md:bg-transparent md:text-primary-700 font-bold"
@@ -244,12 +244,12 @@ const Header = ({ cart, calculateTotalPrice }) => {
                                     }`}
                                 >
                                     Contact
-                                </a>
+                                </Link>
                             </li>
 
                             <li onClick={() => handleActive("Store")}>
-                                <a
-                                    href="/team"
+                                <Link
+                                    to="/team"
                                     className={`block py-2 pl-3 pr-4 text-gray-700 rounded md:hover:bg-transparent md:hover:text-primary-700 md:p-0 ${
                                         active === "Team"
                                             ? "text-white bg-primary-700 md:bg-transparent md:text-primary-700 font-bold"
@@ -257,12 +257,12 @@ const Header = ({ cart, calculateTotalPrice }) => {
                                     }`}
                                 >
                                     Team
-                                </a>
+                                </Link>
                             </li>
 
                             <li onClick={() => handleActive("Faq")}>
-                                <a
-                                    href="/faq"
+                                <Link
+                                    to="/faq"
                                     className={`block py-2 pl-3 pr-4 text-gray-700 rounded md:hover:bg-transparent md:hover:text-primary-700 md:p-0 ${
                                         active === "Faq"
                                             ? "text-white bg-primary-700 md:bg-transparent md:text-primary-700 font-bold"
@@ -270,7 +270,7 @@ const Header = ({ cart, calculateTotalPrice }) => {
                                     }`}
                                 >
                                     Faq
-                                </a>
+                                </Link>
                             </li>
 
                             {currentUser?.email && (

@@ -9,9 +9,8 @@ const Team = () => {
                         Our Team
                     </h2>
                     <p class="font-light text-gray-500 lg:mb-16 sm:text-xl dark:text-gray-400">
-                        Explore the whole collection of open-source web
-                        components and elements built with the utility classes
-                        from Boss International
+                        Meet our team we have a strong team for maintain our
+                        e-commerce website and business.
                     </p>
                 </div>
                 <div class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2">

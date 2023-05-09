@@ -24,14 +24,13 @@ const Faq = () => {
                                         clip-rule="evenodd"
                                     ></path>
                                 </svg>
-                                What do you mean by "Figma assets"?
+                                What kind of products does Boss International
+                                offer?
                             </h3>
                             <p class="text-gray-500">
-                                You will have access to download the full Figma
-                                project including all of the pages, the
-                                components, responsive pages, and also the
-                                icons, illustrations, and images included in the
-                                screens.
+                                Boss International offers a wide range of
+                                products, including fashion accessories,
+                                electronics, home appliances, and more.
                             </p>
                         </div>
                         <div class="mb-10">
@@ -48,13 +47,15 @@ const Faq = () => {
                                         clip-rule="evenodd"
                                     ></path>
                                 </svg>
-                                What does "lifetime access" exactly mean?
+                                How can I make a purchase on Boss International?
                             </h3>
                             <p class="text-gray-500">
-                                Once you have purchased either the design, code,
-                                or both packages, you will have access to all of
-                                the future updates based on the roadmap, free of
-                                charge.
+                                To make a purchase on Boss International, simply
+                                browse the website for the product(s) you wish
+                                to buy, add them to your cart, and proceed to
+                                checkout. You can pay with a variety of secure
+                                payment methods, including credit card, debit
+                                card, and PayPal.
                             </p>
                         </div>
                         <div class="mb-10">
@@ -71,25 +72,15 @@ const Faq = () => {
                                         clip-rule="evenodd"
                                     ></path>
                                 </svg>
-                                How does support work?
+                                How long does it take for my order to be
+                                delivered?
                             </h3>
                             <p class="text-gray-500">
-                                We're aware of the importance of well qualified
-                                support, that is why we decided that support
-                                will only be provided by the authors that
-                                actually worked on this project.
-                            </p>
-                            <p class="text-gray-500">
-                                Feel free to{" "}
-                                <a
-                                    href="#"
-                                    class="font-medium underline text-primary-600 dark:text-primary-500 hover:no-underline"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                >
-                                    contact us
-                                </a>{" "}
-                                and we'll help you out as soon as we can.
+                                Delivery times may vary depending on your
+                                location and the shipping method you choose.
+                                However, Boss International strives to deliver
+                                orders as quickly as possible, usually within
+                                3-5 business days.
                             </p>
                         </div>
                         <div class="mb-10">
@@ -106,26 +97,14 @@ const Faq = () => {
                                         clip-rule="evenodd"
                                     ></path>
                                 </svg>
-                                I want to build more than one project. Is that
-                                allowed?
+                                What is the return policy for Boss
+                                International?
                             </h3>
                             <p class="text-gray-500">
-                                You can use Windster for an unlimited amount of
-                                projects, whether it's a personal website, a
-                                SaaS app, or a website for a client. As long as
-                                you don't build a product that will directly
-                                compete with Windster either as a UI kit, theme,
-                                or template, it's fine.
-                            </p>
-                            <p class="text-gray-500">
-                                Find out more information by{" "}
-                                <a
-                                    href="#"
-                                    class="font-medium underline text-primary-600 dark:text-primary-500 hover:no-underline"
-                                >
-                                    reading the license
-                                </a>
-                                .
+                                Boss International has a 30-day return policy.
+                                If you are not satisfied with your purchase, you
+                                can return it for a refund or exchange within 30
+                                days of the delivery date.
                             </p>
                         </div>
                     </div>
@@ -144,20 +123,16 @@ const Faq = () => {
                                         clip-rule="evenodd"
                                     ></path>
                                 </svg>
-                                What does "free updates" include?
+                                Is my personal and payment information secure on
+                                Boss International?
                             </h3>
                             <p class="text-gray-500 dark:text-gray-400">
-                                The free updates that will be provided is based
-                                on the{" "}
-                                <a
-                                    href="#"
-                                    class="font-medium underline text-primary-600 dark:text-primary-500 hover:no-underline"
-                                >
-                                    roadmap
-                                </a>{" "}
-                                that we have laid out for this project. It is
-                                also possible that we will provide extra updates
-                                outside of the roadmap as well.
+                                Yes, Boss International takes the security of
+                                your personal and payment information very
+                                seriously. The website uses secure encryption
+                                technology to protect your data and all payment
+                                transactions are processed through secure
+                                payment gateways.
                             </p>
                         </div>
                         <div class="mb-10">
@@ -174,23 +149,14 @@ const Faq = () => {
                                         clip-rule="evenodd"
                                     ></path>
                                 </svg>
-                                What does the free version include?
+                                Does Boss International offer international
+                                shipping?
                             </h3>
                             <p class="text-gray-500 dark:text-gray-400">
-                                The{" "}
-                                <a
-                                    href="#"
-                                    class="font-medium underline text-primary-600 dark:text-primary-500 hover:no-underline"
-                                >
-                                    free version
-                                </a>{" "}
-                                of Windster includes a minimal style guidelines,
-                                component variants, and a dashboard page with
-                                the mobile version alongside it.
-                            </p>
-                            <p class="text-gray-500 dark:text-gray-400">
-                                You can use this version for any purposes,
-                                because it is open-source under the MIT license.
+                                Yes, Boss International ships to most countries
+                                around the world. However, please note that
+                                shipping times and fees may vary depending on
+                                your location.
                             </p>
                         </div>
                         <div class="mb-10">
@@ -207,21 +173,13 @@ const Faq = () => {
                                         clip-rule="evenodd"
                                     ></path>
                                 </svg>
-                                What is the difference between Windster and
-                                Tailwind UI?
+                                How can I track my order?
                             </h3>
                             <p class="text-gray-500 dark:text-gray-400">
-                                Although both Windster and Tailwind UI are built
-                                for integration with Tailwind CSS, the main
-                                difference is in the design, the pages, the
-                                extra components and UI elements that Windster
-                                includes.
-                            </p>
-                            <p class="text-gray-500 dark:text-gray-400">
-                                Additionally, Windster is a project that is
-                                still in development, and later it will include
-                                both the application, marketing, and e-commerce
-                                UI interfaces.
+                                Once your order has been shipped, you will
+                                receive a tracking number via email. You can use
+                                this tracking number to track your order on the
+                                shipping carrier's website.
                             </p>
                         </div>
                         <div class="mb-10">
@@ -238,28 +196,15 @@ const Faq = () => {
                                         clip-rule="evenodd"
                                     ></path>
                                 </svg>
-                                Can I use Windster in open-source projects?
+                                What if I have a question or concern about my
+                                order?
                             </h3>
                             <p class="text-gray-500 dark:text-gray-400">
-                                Generally, it is accepted to use Windster in
-                                open-source projects, as long as it is not a UI
-                                library, a theme, a template, a page-builder
-                                that would be considered as an alternative to
-                                Windster itself.
-                            </p>
-                            <p class="text-gray-500 dark:text-gray-400">
-                                With that being said, feel free to use this
-                                design kit for your open-source projects.
-                            </p>
-                            <p class="text-gray-500 dark:text-gray-400">
-                                Find out more information by{" "}
-                                <a
-                                    href="#"
-                                    class="font-medium underline text-primary-600 hover:no-underline"
-                                >
-                                    reading the license
-                                </a>
-                                .
+                                If you have any questions or concerns about your
+                                order, you can contact Boss International's
+                                customer service team via email or phone. They
+                                are available to assist you and ensure that you
+                                have a positive shopping experience.
                             </p>
                         </div>
                     </div>
